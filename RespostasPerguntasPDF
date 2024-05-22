@@ -1,0 +1,9 @@
+No código refatorado, foram aplicadas várias refatorações para melhorar a legibilidade, modularidade e manutenibilidade do código:
+
+Extração de método lerCoeficiente: Essa refatoração foi aplicada para extrair a lógica de leitura de um coeficiente em um método separado. Isso torna o código mais claro e facilita a reutilização dessa funcionalidade em outros contextos.
+
+Simplificação da lógica em resolverEquacao: A lógica para resolver a equação do segundo grau foi simplificada para torná-la mais clara e direta. Isso foi alcançado através da eliminação de algumas condições aninhadas e da redução do nível de indentação.
+
+Criação do método calcularDelta: Foi adicionado um método separado para calcular o delta da equação do segundo grau. Isso separa essa responsabilidade em um método específico, tornando o código mais modular e facilitando a compreensão da função resolverEquacao.
+
+Essas refatorações foram aplicadas para melhorar a estrutura do código, torná-lo mais legível e facilitar a manutenção futura. Separar a lógica em métodos menores e mais específicos ajuda a tornar o código mais modular e fácil de entender, além de facilitar a identificação e correção de possíveis erros.
