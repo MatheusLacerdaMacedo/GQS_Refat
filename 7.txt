@@ -1,0 +1,135 @@
+Codigo inicial
+
+import javax.swing.JOptionPane;
+
+public class NomeCompleto {
+    public static void main(String[] args) {
+        String primeiroNome = JOptionPane.showInputDialog("Informe o primeiro nome:");
+        String nomeDoMeio = JOptionPane.showInputDialog("Informe o nome do meio:");
+        String ultimoNome = JOptionPane.showInputDialog("Informe o último nome:");
+
+        String nomeCompleto = primeiroNome + " " + nomeDoMeio + " " + ultimoNome;
+
+        JOptionPane.showMessageDialog(null, "Nome completo: " + nomeCompleto);
+    }
+}
+
+Extração de Método: Extraímos métodos para a leitura de cada nome.
+Remoção de Código Repetitivo: Melhoramos a modularidade do código.
+
+import javax.swing.JOptionPane;
+
+public class NomeCompleto {
+    public static void main(String[] args) {
+        String primeiroNome = lerNome("primeiro");
+        String nomeDoMeio = lerNome("nome do meio");
+        String ultimoNome = lerNome("último");
+
+        String nomeCompleto = montarNomeCompleto(primeiroNome, nomeDoMeio, ultimoNome);
+
+        JOptionPane.showMessageDialog(null, "Nome completo: " + nomeCompleto);
+    }
+
+    private static String lerNome(String parteDoNome) {
+        return JOptionPane.showInputDialog("Informe o " + parteDoNome + " nome:");
+    }
+
+    private static String montarNomeCompleto(String primeiroNome, String nomeDoMeio, String ultimoNome) {
+        return primeiroNome + " " + nomeDoMeio + " " + ultimoNome;
+    }
+}
+
+Programa 2: Operações Matemáticas
+import javax.swing.JOptionPane;
+
+public class OperacoesMatematicas {
+    public static void main(String[] args) {
+        int numero1 = Integer.parseInt(JOptionPane.showInputDialog("Informe o primeiro número:"));
+        int numero2 = Integer.parseInt(JOptionPane.showInputDialog("Informe o segundo número:"));
+        
+        String menu = "Escolha a operação:\n1 – Somar\n2 – Subtrair\n3 – Multiplicar\n4 – Dividir";
+        int opcao = Integer.parseInt(JOptionPane.showInputDialog(menu));
+        
+        double resultado = 0;
+        boolean operacaoValida = true;
+
+        switch (opcao) {
+            case 1:
+                resultado = numero1 + numero2;
+                break;
+            case 2:
+                resultado = numero1 - numero2;
+                break;
+            case 3:
+                resultado = numero1 * numero2;
+                break;
+            case 4:
+                if (numero2 != 0) {
+                    resultado = (double) numero1 / numero2;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro: Divisão por zero!");
+                    operacaoValida = false;
+                }
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Opção inválida!");
+                operacaoValida = false;
+        }
+
+        if (operacaoValida) {
+            JOptionPane.showMessageDialog(null, "O resultado é: " + resultado);
+        }
+    }
+}
+
+Extração de Métodos: Extraímos métodos para ler números, exibir o menu e realizar a operação.
+Melhoria da Modularidade: Melhoramos a modularidade e a legibilidade do código.
+java
+
+import javax.swing.JOptionPane;
+
+public class OperacoesMatematicas {
+    public static void main(String[] args) {
+        int numero1 = lerNumero("primeiro");
+        int numero2 = lerNumero("segundo");
+
+        int opcao = exibirMenu();
+
+        double resultado = realizarOperacao(numero1, numero2, opcao);
+
+        if (Double.isNaN(resultado)) {
+            JOptionPane.showMessageDialog(null, "Erro: Divisão por zero!");
+        } else {
+            JOptionPane.showMessageDialog(null, "O resultado é: " + resultado);
+        }
+    }
+
+    private static int lerNumero(String descricao) {
+        return Integer.parseInt(JOptionPane.showInputDialog("Informe o " + descricao + " número:"));
+    }
+
+    private static int exibirMenu() {
+        String menu = "Escolha a operação:\n1 – Somar\n2 – Subtrair\n3 – Multiplicar\n4 – Dividir";
+        return Integer.parseInt(JOptionPane.showInputDialog(menu));
+    }
+
+    private static double realizarOperacao(int numero1, int numero2, int opcao) {
+        switch (opcao) {
+            case 1:
+                return numero1 + numero2;
+            case 2:
+                return numero1 - numero2;
+            case 3:
+                return numero1 * numero2;
+            case 4:
+                return numero2 != 0 ? (double) numero1 / numero2 : Double.NaN;
+            default:
+                JOptionPane.showMessageDialog(null, "Opção inválida!");
+                return Double.NaN;
+        }
+    }
+}
+
+Extração de Métodos: Extraímos métodos (lerNome, montarNomeCompleto, lerNumero, exibirMenu, realizarOperacao) para tornar o código mais modular, legível e fácil de manter.
+Remoção de Código Repetitivo: Reduzimos a repetição de código e centralizamos a lógica em métodos dedicados.
+Melhoria da Validação: A abordagem modular facilita a adição de futuras validações e a reutilização de código.

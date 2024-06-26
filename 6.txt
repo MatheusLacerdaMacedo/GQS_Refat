@@ -1,0 +1,173 @@
+Codigo inicial 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
+class Produto {
+    String codigo;
+    String nome;
+    String tipo;
+    double valor;
+    double desconto;
+
+    public Produto(String codigo, String nome, String tipo, double valor, double desconto) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.tipo = tipo;
+        this.valor = valor;
+        this.desconto = desconto;
+    }
+
+    public double calcularValorComDesconto() {
+        return valor - (valor * desconto);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Produto> produtos = new ArrayList<>();
+        int opcao;
+
+        do {
+            String codigo = JOptionPane.showInputDialog("Informe o código do produto:");
+            String nome = JOptionPane.showInputDialog("Informe o nome do produto:");
+            String tipo = JOptionPane.showInputDialog("Informe o tipo do produto (roupas, calçados, casa):");
+            double valor = Double.parseDouble(JOptionPane.showInputDialog("Informe o valor do produto:"));
+            double desconto = 0;
+
+            switch (tipo.toLowerCase()) {
+                case "roupas":
+                    desconto = 0.05;
+                    break;
+                case "calçados":
+                    desconto = 0.04;
+                    break;
+                case "casa":
+                    desconto = 0.03;
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Tipo de produto inválido!");
+                    continue;
+            }
+
+            Produto produto = new Produto(codigo, nome, tipo, valor, desconto);
+            produtos.add(produto);
+
+            opcao = JOptionPane.showConfirmDialog(null, "Deseja cadastrar outro produto?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        } while (opcao == JOptionPane.YES_OPTION);
+
+        double totalSemDesconto = 0;
+        double totalComDesconto = 0;
+
+        for (Produto produto : produtos) {
+            totalSemDesconto += produto.valor;
+            totalComDesconto += produto.calcularValorComDesconto();
+        }
+
+        JOptionPane.showMessageDialog(null, "Total de produtos vendidos sem desconto: " + totalSemDesconto);
+        JOptionPane.showMessageDialog(null, "Total de produtos vendidos com desconto: " + totalComDesconto);
+    }
+}
+
+Extração de Métodos: Extraímos métodos para evitar a duplicação de código e melhorar a legibilidade.
+Separação de Responsabilidades: Criamos uma classe Produto com métodos específicos para cálculos, seguindo o princípio de responsabilidade única.
+Uso de Constantes: Usamos constantes para os valores de desconto.
+Melhoria da Validação de Entrada: Adicionamos uma melhor validação de entrada.
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
+class Produto {
+    String codigo;
+    String nome;
+    String tipo;
+    double valor;
+    double desconto;
+
+    public Produto(String codigo, String nome, String tipo, double valor, double desconto) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.tipo = tipo;
+        this.valor = valor;
+        this.desconto = desconto;
+    }
+
+    public double calcularValorComDesconto() {
+        return valor - (valor * desconto);
+    }
+}
+
+public class Main {
+    private static final double DESCONTO_ROUPAS = 0.05;
+    private static final double DESCONTO_CALCADOS = 0.04;
+    private static final double DESCONTO_CASA = 0.03;
+
+    public static void main(String[] args) {
+        List<Produto> produtos = new ArrayList<>();
+        int opcao;
+
+        do {
+            Produto produto = cadastrarProduto();
+            if (produto != null) {
+                produtos.add(produto);
+            }
+
+            opcao = JOptionPane.showConfirmDialog(null, "Deseja cadastrar outro produto?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        } while (opcao == JOptionPane.YES_OPTION);
+
+        apresentarTotais(produtos);
+    }
+
+    private static Produto cadastrarProduto() {
+        String codigo = JOptionPane.showInputDialog("Informe o código do produto:");
+        String nome = JOptionPane.showInputDialog("Informe o nome do produto:");
+        String tipo = JOptionPane.showInputDialog("Informe o tipo do produto (roupas, calçados, casa):");
+        double valor = 0;
+        try {
+            valor = Double.parseDouble(JOptionPane.showInputDialog("Informe o valor do produto:"));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Valor inválido!");
+            return null;
+        }
+        double desconto = obterDesconto(tipo);
+
+        if (desconto == 0) {
+            JOptionPane.showMessageDialog(null, "Tipo de produto inválido!");
+            return null;
+        }
+
+        return new Produto(codigo, nome, tipo, valor, desconto);
+    }
+
+    private static double obterDesconto(String tipo) {
+        switch (tipo.toLowerCase()) {
+            case "roupas":
+                return DESCONTO_ROUPAS;
+            case "calçados":
+                return DESCONTO_CALCADOS;
+            case "casa":
+                return DESCONTO_CASA;
+            default:
+                return 0;
+        }
+    }
+
+    private static void apresentarTotais(List<Produto> produtos) {
+        double totalSemDesconto = 0;
+        double totalComDesconto = 0;
+
+        for (Produto produto : produtos) {
+            totalSemDesconto += produto.valor;
+            totalComDesconto += produto.calcularValorComDesconto();
+        }
+
+        JOptionPane.showMessageDialog(null, "Total de produtos vendidos sem desconto: " + totalSemDesconto);
+        JOptionPane.showMessageDialog(null, "Total de produtos vendidos com desconto: " + totalComDesconto);
+    }
+}
+
+Extração de Métodos: Extraímos os métodos cadastrarProduto(), obterDesconto() e apresentarTotais() para tornar o código mais modular e legível.
+Separação de Responsabilidades: Criamos uma classe Produto que contém as propriedades e métodos relacionados a um produto, seguindo o princípio de responsabilidade única.
+Uso de Constantes: Definimos constantes para os valores de desconto, melhorando a manutenção e evitando o uso de números mágicos.
+Melhoria da Validação de Entrada: Adicionamos validação para garantir que o valor do produto seja um número válido e que o tipo de produto seja válido, melhorando a robustez do código.

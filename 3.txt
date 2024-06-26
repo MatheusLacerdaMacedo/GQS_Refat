@@ -1,0 +1,36 @@
+Criação de um Método para Calcular a Média: Criar um método separado para calcular a média de um vetor, eliminando a duplicação de código.
+
+Uso de Estruturas de Controle Mais Legíveis: Utilizar laços for-each para melhorar a legibilidade do código.
+
+Remoção de Variáveis Desnecessárias: Evitar o uso de variáveis globais desnecessárias, como a variável soma, e torná-las locais dentro do método criado.
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        double vet1[] = { 90, 88, 78, 76 };
+        double vet2[] = { 865, 564, 43, 12 };
+
+        double mediaVet1 = calcularMedia(vet1);
+        System.out.println("Média do vetor 1: " + mediaVet1);
+
+        double mediaVet2 = calcularMedia(vet2);
+        System.out.println("Média do vetor 2: " + mediaVet2);
+    }
+
+    // Método para calcular a média de um vetor
+    private static double calcularMedia(double[] vetor) {
+        double soma = 0;
+        for (double valor : vetor) {
+            soma += valor;
+        }
+        return soma / vetor.length;
+    }
+}
+
+
+Criação de um Método para Calcular a Média: Essa refatoração elimina a duplicação de código, tornando o programa mais modular e facilitando futuras manutenções e expansões. Caso precise calcular a média de outros vetores, basta chamar o método calcularMedia.
+
+Uso de Laço for-each: O laço for-each é mais legível e menos propenso a erros do que um laço for tradicional quando iterando sobre todos os elementos de um vetor.
+
+Remoção de Variáveis Globais Desnecessárias: Movendo a variável soma para dentro do método calcularMedia, reduz-se o escopo da variável, o que melhora a clareza do código e diminui a possibilidade de erros.

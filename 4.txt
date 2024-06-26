@@ -1,0 +1,98 @@
+Criação de Métodos para Validação: Criar métodos separados para cada tipo de validação (nota, salário, sexo, idade). Isso melhora a modularidade e a legibilidade do código.
+Eliminação de Código Duplicado: A lógica para verificar se o botão "cancelar" foi pressionado pode ser movida para um método separado.
+Uso de Constantes para os Limites: Definir constantes para os limites de nota, idade, etc., para evitar números mágicos no código.
+import javax.swing.JOptionPane;
+
+public class Main {
+    private static final int MIN_IDADE = 6;
+    private static final int MAX_IDADE = 150;
+    private static final double MIN_NOTA = 0;
+    private static final double MAX_NOTA = 10;
+    private static final double MIN_SALARIO = 0;
+
+    public static void main(String[] args) {
+        double nota = lerNota();
+        JOptionPane.showMessageDialog(null, "Nota informada: " + nota);
+
+        double salario = lerSalario();
+        JOptionPane.showMessageDialog(null, "Salário informado: " + salario);
+
+        String sexo = lerSexo();
+        JOptionPane.showMessageDialog(null, "Sexo informado: " + sexo);
+
+        int idade = lerIdade();
+        JOptionPane.showMessageDialog(null, "Idade informada: " + idade);
+    }
+
+    private static double lerNota() {
+        double nota = 0;
+        boolean repetir;
+        do {
+            String resp = lerEntrada("Informe a nota [0, 10]", "0");
+            try {
+                nota = Double.parseDouble(resp);
+                repetir = !(nota >= MIN_NOTA && nota <= MAX_NOTA);
+            } catch (NumberFormatException e) {
+                System.err.println("ERRO: número não identificado.");
+                repetir = true;
+            }
+        } while (repetir);
+        return nota;
+    }
+
+    private static double lerSalario() {
+        double salario = 0;
+        boolean repetir;
+        do {
+            String resp = lerEntrada("Informe o salário", "0");
+            try {
+                salario = Double.parseDouble(resp);
+                repetir = !(salario > MIN_SALARIO);
+            } catch (NumberFormatException e) {
+                System.err.println("ERRO: número não identificado.");
+                repetir = true;
+            }
+        } while (repetir);
+        return salario;
+    }
+
+    private static String lerSexo() {
+        String sexo;
+        boolean repetir;
+        do {
+            sexo = lerEntrada("Informe o sexo", "");
+            repetir = !(sexo.equalsIgnoreCase("f") || sexo.equalsIgnoreCase("m"));
+        } while (repetir);
+        return sexo;
+    }
+
+    private static int lerIdade() {
+        int idade = 0;
+        boolean repetir;
+        do {
+            String resp = lerEntrada("Informe a idade", "6");
+            try {
+                idade = Integer.parseInt(resp);
+                repetir = !(idade >= MIN_IDADE && idade <= MAX_IDADE);
+            } catch (NumberFormatException e) {
+                System.err.println("ERRO: número não identificado.");
+                repetir = true;
+            }
+        } while (repetir);
+        return idade;
+    }
+
+    private static String lerEntrada(String mensagem, String valorInicial) {
+        String resp = JOptionPane.showInputDialog(mensagem, valorInicial);
+        if (resp == null) {
+            System.err.println("Aviso: o botão \"cancelar\" foi pressionado.");
+            System.exit(1);
+        }
+        return resp;
+    }
+}
+
+
+Criação de Métodos para Validação: Separar a lógica de validação em métodos específicos (lerNota, lerSalario, lerSexo, lerIdade) aumenta a clareza e modularidade do código, facilitando futuras manutenções e expansões.
+Eliminação de Código Duplicado: Mover a verificação de cancelamento para o método lerEntrada elimina a duplicação e centraliza essa verificação, tornando o código mais limpo.
+Uso de Constantes para os Limites: Definir constantes para os limites de validação evita números mágicos, tornando o código mais legível e fácil de modificar caso os limites precisem ser alterados.

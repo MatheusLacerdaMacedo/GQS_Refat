@@ -1,0 +1,58 @@
+Criação de Métodos para Leitura de Lados: Criar um método separado para ler e validar os lados do triângulo, eliminando a duplicação de código.
+Criação de Método para Determinação do Tipo de Triângulo: Criar um método que determina o tipo do triângulo, melhorando a modularidade.
+Uso de Constantes para Mensagens de Erro e Cancelamento: Definir constantes para as mensagens de erro e cancelamento para evitar repetição.
+import javax.swing.JOptionPane;
+
+public class Main {
+    private static final String CANCEL_MESSAGE = "Aviso: o botão \"cancelar\" foi pressionado para sair do programa.";
+    private static final String ERROR_MESSAGE = "ERRO: número não identificado.";
+
+    public static void main(String[] args) {
+        int opcao;
+        do {
+            double lado01 = lerLado("Informe o primeiro lado:");
+            double lado02 = lerLado("Informe o segundo lado:");
+            double lado03 = lerLado("Informe o terceiro lado:");
+
+            // Determinar o tipo de triângulo
+            determinarTipoTriangulo(lado01, lado02, lado03);
+
+            opcao = JOptionPane.showConfirmDialog(null, "Deseja continuar?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        } while (opcao == JOptionPane.YES_OPTION);
+    }
+
+    private static double lerLado(String mensagem) {
+        double lado = 0;
+        boolean repetir;
+        do {
+            String resp = JOptionPane.showInputDialog(mensagem, 0);
+            if (resp == null) {
+                System.err.println(CANCEL_MESSAGE);
+                System.exit(0);
+            }
+            try {
+                lado = Double.parseDouble(resp);
+                repetir = false;
+            } catch (NumberFormatException e) {
+                System.err.println(ERROR_MESSAGE);
+                repetir = true;
+            }
+        } while (repetir);
+        return lado;
+    }
+
+    private static void determinarTipoTriangulo(double lado01, double lado02, double lado03) {
+        if (lado01 == lado02 && lado02 == lado03) {
+            JOptionPane.showMessageDialog(null, "Triângulo equilátero.");
+        } else if (lado01 == lado02 || lado01 == lado03 || lado02 == lado03) {
+            JOptionPane.showMessageDialog(null, "Triângulo isósceles.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Triângulo escaleno.");
+        }
+    }
+}
+
+
+Criação de Métodos para Leitura de Lados: A leitura e validação de cada lado do triângulo foram movidas para um método separado (lerLado). Isso elimina a duplicação de código e melhora a legibilidade.
+Criação de Método para Determinação do Tipo de Triângulo: A lógica para determinar o tipo do triângulo foi movida para um método separado (determinarTipoTriangulo). Isso melhora a modularidade e facilita a manutenção.
+Uso de Constantes para Mensagens de Erro e Cancelamento: As mensagens de erro e cancelamento foram definidas como constantes (CANCEL_MESSAGE e ERROR_MESSAGE) para evitar repetição e facilitar futuras alterações.
